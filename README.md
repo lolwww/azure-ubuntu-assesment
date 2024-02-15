@@ -1,16 +1,51 @@
-# azure-ubuntu-assesment
-Runbooks for Microsoft Azure which help you to perform assesment across your Ubuntu estate on Azure. 
+# Azure Ubuntu Assessment Runbook
 
-### Before you start:
-### 1. Automation account should have a managed identity assigned
-### 2. This managed identity has to be added to the designated subscription
+This repository contains a PowerShell runbook for Azure Automation, designed to assess Ubuntu virtual machines (VMs) across your Azure estate for security updates.
 
-Run this runbook with Azure Automation by supplying Subscription ID to it.
-Script goes through all of the available VMs and attempts to execute 
+## Prerequisites
 
-'ubuntu-advantage security-status' then parse the output of it, then combines the outputs from all VMs.
+Before using this runbook, ensure the following prerequisites are met:
 
-In the end, you can see which packages requires update across your VMs and how many machines are affected per specific one.
+1. **Azure Automation Account**: You must have an Azure Automation account set up.
+2. **Managed Identity**: The Automation account should have a Managed Identity assigned.
+3. **Permissions**: The Managed Identity requires permissions to access VM information and perform actions as needed across your Azure subscription(s).
+
+## Setup
+
+1. **Assign Managed Identity**: Ensure your Automation account's Managed Identity is assigned and has the appropriate permissions to access and manage your VMs.
+2. **Import Runbook**: Import the PowerShell script provided in this repository into your Azure Automation account as a new runbook.
+
+## Usage
+
+To use this runbook:
+
+1. **Navigate** to your Azure Automation account in the Azure Portal.
+2. **Open** the imported runbook.
+3. **Start** the runbook with the necessary parameters, such as your Azure Subscription ID.
+
+### Parameters
+
+- `SubscriptionId`: The ID of the Azure subscription containing the VMs to be assessed. This parameter is mandatory.
+
+## Functionality
+
+This runbook performs the following actions:
+
+- Iterates through all Ubuntu VMs within the specified Azure subscription.
+- Executes the `ubuntu-advantage security-status` command on each VM to assess the security update status.
+- Aggregates the output from all VMs to provide a consolidated view of packages that require updates.
+
+## Output
+
+The runbook outputs:
+
+- A summary of the security update status for each Ubuntu VM.
+- A list of packages that require updates, categorized by their availability (standard updates, ESM updates, etc.).
+- Aggregated statistics on the number of VMs compliant, non-compliant, and not applicable for updates.
+
+## Contributing
+
+We welcome contributions and suggestions to improve this runbook. Please feel free to submit issues or pull requests to the repository.
 
 The result you can see is like this:
 
