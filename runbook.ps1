@@ -1,12 +1,6 @@
-### Before you start:
-### 1. Automation account should have a managed identity assigned
-### 2. This managed identity has to be added to the designated subscription
-
-
-Param
-(
-  [Parameter (Mandatory=$true)]
-  [String] $SubscriptionId
+Param(
+    [Parameter(Mandatory=$true)]
+    [String]$SubscriptionId
 )
 
 # Terminate runbook on non-handled exception
@@ -35,21 +29,21 @@ try {
 $compliantVMs = 0
 $nonCompliantVMs = 0
 $notApplicableVMs = 0
-
+$totalUniqueOutdated = New-Object 'System.Collections.Generic.HashSet[string]'
+$dictUpgradesAvailable = @{}
+$dictUpgradesPending = @{}
 $metadata = @{}
 
 # Create a temporary file for the script
 $TempFile = New-TemporaryFile
 $TempFilePath = $TempFile.FullName
 
-
 # Script to check Ubuntu security updates status
 $ScriptToRun = @"
 /usr/bin/ubuntu-advantage security-status --format json 2>/dev/null | jq '{
     updateSum: (.summary.num_esm_apps_updates + .summary.num_esm_infra_updates + .summary.num_standard_security_updates),
     upgradeAvailablePackages: [.packages[] | select(.status == "upgrade_available") | .package],
-    pendingAttachPackages: [.packages[] | select(.status == "pending_attach") | .package]
-  }'  
+    pendingAttachPackages: [.packages[] | select(.status == "pending_attach") | .package]}'  
 "@
 
 # Write the script to a temp file
@@ -108,28 +102,77 @@ foreach ($job in $metadata.GetEnumerator()) {
     }
     
     $totalOutdatedPackages = $jobResult.updateSum
-    $upgradeAvailablePackages = $jobResult.upgradeAvailablePackages
-    $pendingAttachPackages = $jobResult.pendingAttachPackages
+    $upgradeAvailablePackages = if ($jobResult.upgradeAvailablePackages -eq $null) { @() } else { $jobResult.upgradeAvailablePackages }
+    $pendingAttachPackages = if ($jobResult.pendingAttachPackages -eq $null) { @() } else { $jobResult.pendingAttachPackages }
 
-    # Check and set $totalOutdatedPackages
-    if (-not $totalOutdatedPackages -or $totalOutdatedPackages -eq 0) {
-       $totalOutdatedPackages = "NONE"
+    # Add to HashSet 
+    foreach ($pkg in $upgradeAvailablePackages) {
+        $totalUniqueOutdated.Add($pkg) | Out-Null
+    }
+    foreach ($pkg in $pendingAttachPackages) {
+        $totalUniqueOutdated.Add($pkg) | Out-Null
     }
 
-    # Check and set $upgradeAvailablePackages
-    if (-not $upgradeAvailablePackages -or $upgradeAvailablePackages.Count -eq 0) {
-       $upgradeAvailablePackages = "NONE"
-    } else {
-       # Join the array elements into a string if not empty
-        $upgradeAvailablePackages = $upgradeAvailablePackages -join ", "
+    # Handling HashSet output
+    $totalUniqueOutdatedList = if ($totalUniqueOutdated.Count -gt 0) { 
+        $totalUniqueOutdated -join ", " 
+    } else { 
+        "None" 
+    }
+    
+    $upgradeAvailablePackagesArray = @()
+    if ($upgradeAvailablePackages -ne $null -and $upgradeAvailablePackages -ne '') {
+        $upgradeAvailablePackagesArray = $upgradeAvailablePackages -split ' '
     }
 
-    # Check and set $pendingAttachPackages
-    if (-not $pendingAttachPackages -or $pendingAttachPackages.Count -eq 0) {
-        $pendingAttachPackages = "NONE"
-    } else {
-    # Join the array elements into a string if not empty
-       $pendingAttachPackages = $pendingAttachPackages -join ", "
+    # Ensure packages are correctly split and converted to lists
+    $upgradeAvailablePackagesList = New-Object 'System.Collections.Generic.List[string]'
+    if ($upgradeAvailablePackages -ne $null -and $upgradeAvailablePackages -ne '') {
+        $upgradeAvailablePackagesArray = $upgradeAvailablePackages -split ' '
+        foreach ($item in $upgradeAvailablePackagesArray) {
+            if ($item -ne $null -and $item.Trim() -ne '') {
+                $upgradeAvailablePackagesList.Add($item.Trim())
+            }
+        }
+    }   
+
+    $pendingAttachPackagesArray = @()
+    if ($pendingAttachPackages -ne $null -and $pendingAttachPackages -ne '') {
+        $pendingAttachPackagesArray = $pendingAttachPackages -split ' '
+    }
+    $pendingAttachPackagesList = New-Object 'System.Collections.Generic.List[string]'
+    if ($pendingAttachPackages -ne $null -and $pendingAttachPackages -ne '') {
+        $pendingAttachPackagesArray = $pendingAttachPackages -split ' '
+        foreach ($item in $pendingAttachPackagesArray) {
+            if ($item -ne $null -and $item.Trim() -ne '') {
+                $pendingAttachPackagesList.Add($item.Trim())
+            }
+        }
+    }   
+
+    #Format upgrade list
+    foreach ($package in $upgradeAvailablePackagesList) {
+        if ($package -eq "" -or $package -eq $null) {
+            continue
+        }
+
+        if ($dictUpgradesAvailable.ContainsKey($package)) {
+            $dictUpgradesAvailable[$package]++
+        } else {
+            $dictUpgradesAvailable.Add($package, 1)
+        }
+    }
+    #Format pending list
+    foreach ($package in $pendingAttachPackagesList) {
+        if ($package -eq "" -or $package -eq $null) {
+            continue
+        }
+        
+        if ($dictUpgradesPending.ContainsKey($package)) {
+            $dictUpgradesPending[$package]++
+        } else {
+            $dictUpgradesPending.Add($package, 1)
+        }
     }
 
     $machineName = $machineId.Split('/')[-1]
@@ -147,10 +190,19 @@ foreach ($job in $metadata.GetEnumerator()) {
 
 # Output summary
 $prettifiedOutput = @"
-Total VMs: $($compliantVMs + $nonCompliantVMs + $notApplicableVMs)
-Compliant VMs: $compliantVMs
-Non-compliant VMs: $nonCompliantVMs
+--------------------------------------------------------------------------------------------------------------
+Total VMs on the subscription: $($compliantVMs + $nonCompliantVMs + $notApplicableVMs)
+Fully compliant VMs: $compliantVMs
+Non fully compliant VMs: $nonCompliantVMs
 N/A VMs: $notApplicableVMs
+Total unique esm-infra/esm-apps packages outdated across VMs: $($totalUniqueOutdated.Count)
+List of unique esm-infra/esm-apps packages outdated across VMs: $($totalUniqueOutdatedList)
+
+List of packages with upgrades available now and how many times across your VMs:
+$($dictUpgradesAvailable | ConvertTo-Json)
+
+List of packages with upgrade available with Ubuntu PRO:
+$($dictUpgradesPending | ConvertTo-Json)
 "@
 
 Write-Output $prettifiedOutput
