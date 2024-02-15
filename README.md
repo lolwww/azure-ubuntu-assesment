@@ -47,8 +47,10 @@ The runbook outputs:
 
 We welcome contributions and suggestions to improve this runbook. Please feel free to submit issues or pull requests to the repository.
 
-The result you can see is like this:
 
+## Example output
+The result you can see is like this:
+```
 Subscription 1 (XXXXXXX)
 
 Retrieved VM status for 3 VM(s).
@@ -159,3 +161,4 @@ List of packages with upgrades available now:
 List of packages with upgrade available with Ubuntu PRO:
 
 {}
+```
