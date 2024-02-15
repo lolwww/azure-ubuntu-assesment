@@ -51,15 +51,13 @@ We welcome contributions and suggestions to improve this runbook. Please feel fr
 ## Example output
 The result you can see is like this:
 ```
-Subscription 1 (XXXXXXX)
+Retrieved VM status for 5 VM(s).
 
-Retrieved VM status for 3 VM(s).
-
-Machine test-for-demo-j has total of 55 packages outdated
+Machine test-for-demo-j has total of 22 packages outdated
 
 The packages available to upgrade on test-for-demo-j are the following:
 
-vlc-bin vlc-pluginvideo-output libavformat58 libmagick++-6.q16-8 libavfilter7 libimage-magick-perl ffmpeg vlc-plugin-samba libmagickcore-6.q16-6-extra libimage-magick-q16-perl imagemagick libswresample3 vlc-plugin-qt libgegl-0.4-0 lynx-common libzmq5 python2.7-minimal libmagickwand-6.q16-6 vlc-plugin-skins2 weechat libgegl-common vlc-plugin-visualization weechat-plugins vlc-l10n python2.7 weechat-ruby vlc-plugin-notify libvlc5 libmediainfo0v5 lynx libpostproc55 libvlccore9 libvlc-bin imagemagick-6.q16 weechat-core weechat-perl libavcodec58 weechat-python weechat-curses vlc libavutil56 vlc-data libavdevice58 libswscale5 libopenexr24 libsdl2-2.0-0 libmysofa1 libmagickcore-6.q16-6 vlc-plugin-video-splitter glances libpython2.7-minimal vlc-plugin-base libpython2.7-stdlib libavresample4 imagemagick-6-common
+libmagick++-6.q16-8 libimage-magick-perl libmagickcore-6.q16-6-extra libimage-magick-q16-perl libgegl-0.4-0 lynx-common libzmq5 python2.7-minimal libmagickwand-6.q16-6 libgegl-common python2.7 libvlc5 libmediainfo0v5 libvlccore9 imagemagick-6.q16 libopenexr24 libsdl2-2.0-0 libmysofa1 libmagickcore-6.q16-6 libpython2.7-minimal libpython2.7-stdlib imagemagick-6-common
 
 Upgrades available with Ubuntu PRO only are the following: 
 
@@ -71,94 +69,202 @@ libsystemd0 udev libudev1 libapparmor1 systemd-sysv libpam-systemd systemd libns
 
 Upgrades available with Ubuntu PRO only are the following: 
 
+Machine test-4 has total of 44 packages outdated
+
+The packages available to upgrade on test-4 are the following:
+
+bind9-host bind9-dnsutils login bind9-libs passwd
+
+Upgrades available with Ubuntu PRO only are the following: vlc-plugin-qt libvlc5 libimage-magick-perl vlc-data libvlccore9 vlc imagemagick vlc-bin libjs-jquery-ui vlc-l10n libavdevice58 ffmpeg libopenexr25 libmagick++-6.q16-8 python3-scipy libpostproc55 libmagickcore-6.q16-6-extra vlc-plugin-samba libavcodec58 libimage-magick-q16-perl libmagickwand-6.q16-6 vlc-plugin-notify libavutil56 imagemagick-6.q16 libswscale5 libmagickcore-6.q16-6 vlc-plugin-access-extra vlc-plugin-skins2 libgsl27 vlc-plugin-video-splitter libswresample3 imagemagick-6-common vlc-plugin-video-output libavformat58 libgslcblas0 libvlc-bin vlc-plugin-base vlc-plugin-visualization libavfilter7
+
+Machine test-3-inst has total of 44 packages outdated
+
+The packages available to upgrade on test-3-inst are the following:
+
+bind9-host bind9-dnsutils login bind9-libs passwd
+
+Upgrades available with Ubuntu PRO only are the following: vlc-plugin-qt libvlc5 libimage-magick-perl vlc-data libvlccore9 vlc imagemagick vlc-bin libjs-jquery-ui vlc-l10n libavdevice58 ffmpeg libopenexr25 libmagick++-6.q16-8 python3-scipy libpostproc55 libmagickcore-6.q16-6-extra vlc-plugin-samba libavcodec58 libimage-magick-q16-perl libmagickwand-6.q16-6 vlc-plugin-notify libavutil56 imagemagick-6.q16 libswscale5 libmagickcore-6.q16-6 vlc-plugin-access-extra vlc-plugin-skins2 libgsl27 vlc-plugin-video-splitter libswresample3 imagemagick-6-common vlc-plugin-video-output libavformat58 libgslcblas0 libvlc-bin vlc-plugin-base vlc-plugin-visualization libavfilter7
+
 --------------------------------------------------------------------------------------------------------------
 
-Total VMs on the subscription: 3
+Total VMs on the subscription: 5
 
 Fully compliant VMs: 0
 
-Non fully compliant VMs: 2
+Non fully compliant VMs: 4
 
 N/A VMs: 1
 
-Total unique esm-infra/esm-apps packages outdated across VMs: 64
+Total unique esm-infra/esm-apps packages outdated across VMs: 65
 
-List of unique esm-infra/esm-apps packages outdated across VMs:
-
-vlc-bin, vlc-plugin-video-output, libavformat58, libmagick++-6.q16-8, libavfilter7, libimage-magick-perl, ffmpeg, vlc-plugin-samba, libmagickcore-6.q16-6-extra, libimage-magick-q16-perl, imagemagick, libswresample3, vlc-plugin-qt, libgegl-0.4-0, lynx-common, libzmq5, python2.7-minimal, libmagickwand-6.q16-6, vlc-plugin-skins2, weechat, libgegl-common, vlc-plugin-visualization, weechat-plugins, vlc-l10n, python2.7, weechat-ruby, vlc-plugin-notify, libvlc5, libmediainfo0v5, lynx, libpostproc55, libvlccore9, libvlc-bin, imagemagick-6.q16, weechat-core, weechat-perl, libavcodec58, weechat-python, weechat-curses, vlc, libavutil56, vlc-data, libavdevice58, libswscale5, libopenexr24, libsdl2-2.0-0, libmysofa1, libmagickcore-6.q16-6, vlc-plugin-video-splitter, glances, libpython2.7-minimal, vlc-plugin-base, libpython2.7-stdlib, libavresample4, imagemagick-6-common, libsystemd0, udev, libudev1, libapparmor1, systemd-sysv, libpam-systemd, systemd, libnss-systemd, apparmor
+List of unique esm-infra/esm-apps packages outdated across VMs: libmagick++-6.q16-8, libimage-magick-perl, libmagickcore-6.q16-6-extra, libimage-magick-q16-perl, libgegl-0.4-0, lynx-common, libzmq5, python2.7-minimal, libmagickwand-6.q16-6, libgegl-common, python2.7, libvlc5, libmediainfo0v5, libvlccore9, imagemagick-6.q16, libopenexr24, libsdl2-2.0-0, libmysofa1, libmagickcore-6.q16-6, libpython2.7-minimal, libpython2.7-stdlib, imagemagick-6-common, libsystemd0, udev, libudev1, libapparmor1, systemd-sysv, libpam-systemd, systemd, libnss-systemd, apparmor, bind9-host, bind9-dnsutils, login, bind9-libs, passwd, vlc-plugin-qt, vlc-data, vlc, imagemagick, vlc-bin, libjs-jquery-ui, vlc-l10n, libavdevice58, ffmpeg, libopenexr25, python3-scipy, libpostproc55, vlc-plugin-samba, libavcodec58, vlc-plugin-notify, libavutil56, libswscale5, vlc-plugin-access-extra, vlc-plugin-skins2, libgsl27, vlc-plugin-video-splitter, libswresample3, vlc-plugin-video-output, libavformat58, libgslcblas0, libvlc-bin, vlc-plugin-base, vlc-plugin-visualization, libavfilter7
 
 
-List of packages with upgrades available now:
 
+List of packages with upgrades available now and how many times across your VMs:
 
 {
-  "python2.7": 1,
-  "libswscale5": 1,
-  "udev": 1,
-  "libapparmor1": 1,
-  "libavformat58": 1,
-  "ffmpeg": 1,
-  "weechat-curses": 1,
-  "vlc-plugin-notify": 1,
-  "libavdevice58": 1,
-  "libzmq5": 1,
-  "weechat": 1,
-  "libnss-systemd": 1,
-  "libudev1": 1,
-  "imagemagick-6.q16": 1,
-  "apparmor": 1,
-  "libmagickcore-6.q16-6": 1,
-  "libvlc5": 1,
-  "libgegl-common": 1,
-  "vlc-plugin-video-output": 1,
-  "vlc-plugin-samba": 1,
-  "weechat-ruby": 1,
-  "lynx": 1,
-  "python2.7-minimal": 1,
-  "libavfilter7": 1,
-  "libgegl-0.4-0": 1,
-  "vlc": 1,
-  "weechat-python": 1,
-  "libvlccore9": 1,
-  "imagemagick": 1,
-  "libpam-systemd": 1,
-  "imagemagick-6-common": 1,
-  "vlc-bin": 1,
+
   "lynx-common": 1,
-  "vlc-l10n": 1,
-  "libavutil56": 1,
-  "libmagick++-6.q16-8": 1,
-  "libavcodec58": 1,
-  "libopenexr24": 1,
-  "vlc-plugin-video-splitter": 1,
-  "libswresample3": 1,
-  "libmagickwand-6.q16-6": 1,
+
+  "imagemagick-6.q16": 1,
+
   "libpython2.7-stdlib": 1,
-  "libsystemd0": 1,
-  "glances": 1,
-  "vlc-data": 1,
-  "libpython2.7-minimal": 1,
-  "libpostproc55": 1,
-  "weechat-plugins": 1,
+
   "libimage-magick-perl": 1,
+
   "libmysofa1": 1,
-  "libvlc-bin": 1,
+
+  "libmagickwand-6.q16-6": 1,
+
+  "libgegl-0.4-0": 1,
+
+  "libpython2.7-minimal": 1,
+
+  "libnss-systemd": 1,
+
+  "bind9-libs": 2,
+
   "systemd-sysv": 1,
-  "libmediainfo0v5": 1,
-  "weechat-perl": 1,
-  "weechat-core": 1,
-  "vlc-plugin-skins2": 1,
-  "vlc-plugin-qt": 1,
-  "vlc-plugin-base": 1,
+
+  "udev": 1,
+
+  "python2.7": 1,
+
+  "python2.7-minimal": 1,
+
+  "libopenexr24": 1,
+
+  "libpam-systemd": 1,
+
   "libimage-magick-q16-perl": 1,
-  "libsdl2-2.0-0": 1,
-  "vlc-plugin-visualization": 1,
-  "libavresample4": 1,
+
+  "imagemagick-6-common": 1,
+
+  "libvlc5": 1,
+
+  "libapparmor1": 1,
+
+  "libsystemd0": 1,
+
+  "libudev1": 1,
+
+  "bind9-host": 2,
+
+  "apparmor": 1,
+
+  "libvlccore9": 1,
+
+  "bind9-dnsutils": 2,
+
+  "login": 2,
+
+  "passwd": 2,
+
   "systemd": 1,
-  "libmagickcore-6.q16-6-extra": 1
+
+  "libmagickcore-6.q16-6": 1,
+
+  "libmagick++-6.q16-8": 1,
+
+  "libgegl-common": 1,
+
+  "libmagickcore-6.q16-6-extra": 1,
+
+  "libzmq5": 1,
+
+  "libmediainfo0v5": 1,
+
+  "libsdl2-2.0-0": 1
+
 }
+
+
 
 List of packages with upgrade available with Ubuntu PRO:
 
-{}
+{
+
+  "libavcodec58": 2,
+
+  "libavdevice58": 2,
+
+  "imagemagick-6.q16": 2,
+
+  "vlc-plugin-qt": 2,
+
+  "libimage-magick-perl": 2,
+
+  "vlc-plugin-skins2": 2,
+
+  "vlc-plugin-samba": 2,
+
+  "libmagickwand-6.q16-6": 2,
+
+  "libpostproc55": 2,
+
+  "imagemagick": 2,
+
+  "libswscale5": 2,
+
+  "vlc-plugin-notify": 2,
+
+  "vlc-plugin-base": 2,
+
+  "libavformat58": 2,
+
+  "libavutil56": 2,
+
+  "vlc-plugin-access-extra": 2,
+
+  "vlc-plugin-video-output": 2,
+
+  "libgslcblas0": 2,
+
+  "libimage-magick-q16-perl": 2,
+
+  "imagemagick-6-common": 2,
+
+  "libvlc5": 2,
+
+  "libmagickcore-6.q16-6": 2,
+
+  "vlc-data": 2,
+
+  "libswresample3": 2,
+
+  "libvlccore9": 2,
+
+  "vlc-plugin-video-splitter": 2,
+
+  "python3-scipy": 2,
+
+  "vlc": 2,
+
+  "libmagick++-6.q16-8": 2,
+
+  "libopenexr25": 2,
+
+  "libmagickcore-6.q16-6-extra": 2,
+
+  "vlc-plugin-visualization": 2,
+
+  "libgsl27": 2,
+
+  "libavfilter7": 2,
+
+  "libvlc-bin": 2,
+
+  "vlc-l10n": 2,
+
+  "vlc-bin": 2,
+
+  "libjs-jquery-ui": 2,
+
+  "ffmpeg": 2
+
+}
+
+
+
 ```
