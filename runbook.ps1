@@ -40,10 +40,17 @@ $TempFilePath = $TempFile.FullName
 
 # Script to check Ubuntu security updates status
 $ScriptToRun = @"
-/usr/bin/ubuntu-advantage security-status --format json 2>/dev/null | jq '{
-    updateSum: (.summary.num_esm_apps_updates + .summary.num_esm_infra_updates + .summary.num_standard_security_updates),
-    upgradeAvailablePackages: [.packages[] | select(.status == "upgrade_available") | .package],
-    pendingAttachPackages: [.packages[] | select(.status == "pending_attach") | .package]}'  
+/usr/bin/ubuntu-advantage security-status --format json 2>/dev/null | 
+python3 -c "
+import sys, json;
+data = json.load(sys.stdin);
+print(json.dumps({
+    'updateSum': data['summary']['num_esm_apps_updates'] + 
+                 data['summary']['num_esm_infra_updates'] + 
+                 data['summary']['num_standard_security_updates'],
+    'upgradeAvailablePackages': [pkg['package'] for pkg in data['packages'] if pkg['status'] == 'upgrade_available'],
+    'pendingAttachPackages': [pkg['package'] for pkg in data['packages'] if pkg['status'] == 'pending_attach']
+}, indent=4))"
 "@
 
 # Write the script to a temp file
