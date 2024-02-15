@@ -1,5 +1,5 @@
 # azure-ubuntu-assesment
-Runbooks for Microsoft Azure which help you to perform assesment across you Ubuntu estate on Azure. 
+Runbooks for Microsoft Azure which help you to perform assesment across your Ubuntu estate on Azure. 
 
 ### Before you start:
 ### 1. Automation account should have a managed identity assigned
