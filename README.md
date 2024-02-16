@@ -40,13 +40,12 @@ This runbook performs the following actions:
 The runbook outputs:
 
 - A summary of the security update status for each Ubuntu VM.
-- A list of packages that require updates, categorized by their availability (standard updates, ESM updates, etc.).
+- A list of packages that require updates, categorized by their availability.
 - Aggregated statistics on the number of VMs compliant, non-compliant, and not applicable for updates.
 
 ## Contributing
 
-We welcome contributions and suggestions to improve this runbook. Please feel free to submit issues or pull requests to the repository.
-
+ Please feel free to submit issues or pull requests to the repository.
 
 ## Example output
 The result you can see is like this:
